@@ -1,6 +1,5 @@
 // ══════════════════════════════════════════════
 // ASYSTENT DEKORACJI — Supabase client
-// Uzupełnij SB_URL i SB_KEY po założeniu projektu
 // ══════════════════════════════════════════════
 
 export const SB_URL = 'https://sqjetzxyfyzfjvqpldzh.supabase.co';
@@ -25,27 +24,33 @@ function sbFetch(method, path, body) {
 }
 
 export const sbApi = {
-  // Klienci
-  getClients:     ()           => sbFetch('GET',    'clients?select=*&order=created_at.desc'),
-  addClient:      (data)       => sbFetch('POST',   'clients', data),
-  updateClient:   (id, data)   => sbFetch('PATCH',  `clients?id=eq.${id}`, data),
-  deleteClient:   (id)         => sbFetch('DELETE', `clients?id=eq.${id}`),
+  getClients:         ()                   => sbFetch('GET',    'clients?select=*&order=created_at.desc'),
+  addClient:          (data)               => sbFetch('POST',   'clients', data),
+  updateClient:       (id, data)           => sbFetch('PATCH',  'clients?id=eq.'+id, data),
+  deleteClient:       (id)                 => sbFetch('DELETE', 'clients?id=eq.'+id),
+  updateClientStatus: (id, status)         => sbFetch('PATCH',  'clients?id=eq.'+id, { status }),
 
-  // Zamówienia tkanin
-  getOrders:      ()           => sbFetch('GET',    'fabric_orders?select=*&order=created_at.desc'),
-  addOrder:       (data)       => sbFetch('POST',   'fabric_orders', data),
-  updateOrder:    (id, data)   => sbFetch('PATCH',  `fabric_orders?id=eq.${id}`, data),
-  deleteOrder:    (id)         => sbFetch('DELETE', `fabric_orders?id=eq.${id}`),
+  getDeals:           ()                   => sbFetch('GET',    'deals?select=*&order=created_at.desc'),
+  addDeal:            (clientId)           => sbFetch('POST',   'deals', { client_id: clientId, stage: 'zapytanie' }),
+  updateDeal:         (id, data)           => sbFetch('PATCH',  'deals?id=eq.'+id, data),
+  deleteDeal:         (id)                 => sbFetch('DELETE', 'deals?id=eq.'+id),
 
-  // Zlecenia szycia
-  getSewing:      ()           => sbFetch('GET',    'sewing_orders?select=*&order=created_at.desc'),
-  addSewing:      (data)       => sbFetch('POST',   'sewing_orders', data),
-  updateSewing:   (id, data)   => sbFetch('PATCH',  `sewing_orders?id=eq.${id}`, data),
-  deleteSewing:   (id)         => sbFetch('DELETE', `sewing_orders?id=eq.${id}`),
+  getAttachments:     (dealId)             => sbFetch('GET',    'deal_attachments?deal_id=eq.'+dealId+'&select=*'),
+  addAttachment:      (dealId, url, name)  => sbFetch('POST',   'deal_attachments', { deal_id: dealId, url, name }),
+  deleteAttachment:   (id)                 => sbFetch('DELETE', 'deal_attachments?id=eq.'+id),
 
-  // Zadania
-  getTasks:       ()           => sbFetch('GET',    'tasks?select=*&order=created_at.desc'),
-  addTask:        (data)       => sbFetch('POST',   'tasks', data),
-  updateTask:     (id, data)   => sbFetch('PATCH',  `tasks?id=eq.${id}`, data),
-  deleteTask:     (id)         => sbFetch('DELETE', `tasks?id=eq.${id}`),
+  getOrders:          ()                   => sbFetch('GET',    'fabric_orders?select=*&order=created_at.desc'),
+  addOrder:           (data)               => sbFetch('POST',   'fabric_orders', data),
+  updateOrder:        (id, data)           => sbFetch('PATCH',  'fabric_orders?id=eq.'+id, data),
+  deleteOrder:        (id)                 => sbFetch('DELETE', 'fabric_orders?id=eq.'+id),
+
+  getSewing:          ()                   => sbFetch('GET',    'sewing_orders?select=*&order=created_at.desc'),
+  addSewing:          (data)               => sbFetch('POST',   'sewing_orders', data),
+  updateSewing:       (id, data)           => sbFetch('PATCH',  'sewing_orders?id=eq.'+id, data),
+  deleteSewing:       (id)                 => sbFetch('DELETE', 'sewing_orders?id=eq.'+id),
+
+  getTasks:           ()                   => sbFetch('GET',    'tasks?select=*&order=created_at.desc'),
+  addTask:            (data)               => sbFetch('POST',   'tasks', data),
+  updateTask:         (id, data)           => sbFetch('PATCH',  'tasks?id=eq.'+id, data),
+  deleteTask:         (id)                 => sbFetch('DELETE', 'tasks?id=eq.'+id),
 };
