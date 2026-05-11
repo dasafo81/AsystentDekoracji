@@ -1,0 +1,81 @@
+/* ══════════════════════════════════════════════
+   ASYSTENT DEKORACJI — Design System
+   Paleta: szałwia sidebar + krem main, neumorphism
+   ══════════════════════════════════════════════ */
+
+:root {
+  /* ── Sidebar ── */
+  --sb-bg:      #8fada0;
+  --sb-dark:    #6e8c80;
+  --sb-light:   #b0cec0;
+  --sb-text:    rgba(240, 248, 244, 0.95);
+  --sb-muted:   rgba(240, 248, 244, 0.45);
+  --sb-accent:  #c8f0e0;
+
+  /* ── Main area ── */
+  --m-bg:       #ede8e2;
+  --m-dark:     #d0c8c0;
+  --m-light:    #ffffff;
+  --m-text:     #2e2820;
+  --m-muted:    #a89888;
+
+  /* ── Akcenty ── */
+  --accent:     #4a8a72;
+  --accent-lav: #7868b0;
+  --accent-ros: #b06880;
+
+  /* ── Spacing ── */
+  --r-sm:   10px;
+  --r-md:   14px;
+  --r-lg:   18px;
+  --r-xl:   24px;
+
+  /* ── Neumorphism shadows — main ── */
+  --neu-out:    6px 6px 16px var(--m-dark), -4px -4px 12px var(--m-light);
+  --neu-in:     inset 4px 4px 10px var(--m-dark), inset -3px -3px 8px var(--m-light);
+  --neu-sm:     3px 3px 8px var(--m-dark), -2px -2px 6px var(--m-light);
+
+  /* ── Neumorphism shadows — sidebar ── */
+  --neu-sb-out: 5px 5px 13px var(--sb-dark), -3px -3px 9px var(--sb-light);
+  --neu-sb-in:  inset 3px 3px 8px var(--sb-dark), inset -2px -2px 6px var(--sb-light);
+}
+
+/* ── Reset ── */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  font-size: 14px;
+  line-height: 1.5;
+  background: var(--m-bg);
+  color: var(--m-text);
+  -webkit-font-smoothing: antialiased;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+input, textarea, select {
+  font-family: inherit;
+}
+
+/* ── Utility ── */
+.neu-out  { box-shadow: var(--neu-out); }
+.neu-in   { box-shadow: var(--neu-in); }
+.neu-sm   { box-shadow: var(--neu-sm); }
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--m-dark); border-radius: 3px; }
