@@ -7,45 +7,52 @@ var ce = React.createElement;
 
 // ── Stałe ────────────────────────────────────────────────────────────────────
 export var CRM_STAGES = [
-  { id: 'zapytanie',  label: 'Zapytanie',  color: '#7868b0' },
-  { id: 'pomiar',     label: 'Pomiar',     color: '#c09080' },
-  { id: 'wycena',     label: 'Wycena',     color: '#4a8a72' },
-  { id: 'zamowienie', label: 'Zamówienie', color: '#5a9ab0' },
-  { id: 'realizacja', label: 'Realizacja', color: '#7868b0' },
-  { id: 'montaz',     label: 'Montaż',     color: '#b08060' },
-  { id: 'zakonczone', label: 'Zakończone', color: '#90aaa4', clientStatus: 'zrealizowane' },
+  { id: 'zapytanie',  label: 'Zapytanie',  color: '#a78bfa' },
+  { id: 'pomiar',     label: 'Pomiar',     color: '#fb923c' },
+  { id: 'wycena',     label: 'Wycena',     color: '#34d399' },
+  { id: 'zamowienie', label: 'Zamówienie', color: '#60a5fa' },
+  { id: 'realizacja', label: 'Realizacja', color: '#a78bfa' },
+  { id: 'montaz',     label: 'Montaż',     color: '#f472b6' },
+  { id: 'zakonczone', label: 'Zakończone', color: '#94a3b8', clientStatus: 'zrealizowane' },
 ];
-export var STAGE_ODRZUCONE = { id: 'odrzucone', label: 'Odrzucone', color: '#c07878', clientStatus: 'odrzucone' };
+export var STAGE_ODRZUCONE = { id: 'odrzucone', label: 'Odrzucone', color: '#f87171', clientStatus: 'odrzucone' };
 
 // ── Style ──────────────────────────────────────────────────────────────────
-var NEU_OUT = '6px 6px 16px var(--m-dark), -4px -4px 12px var(--m-light)';
-var NEU_IN  = 'inset 4px 4px 10px var(--m-dark), inset -3px -3px 8px var(--m-light)';
-var NEU_SM  = '3px 3px 8px var(--m-dark), -2px -2px 6px var(--m-light)';
+var GLASS = {
+  background: 'rgba(255,255,255,0.68)',
+  backdropFilter: 'blur(16px)',
+  WebkitBackdropFilter: 'blur(16px)',
+  border: '1px solid rgba(255,255,255,0.85)',
+};
+var SHADOW = '0 4px 24px rgba(30,27,75,0.07)';
+var SHADOW_SM = '0 2px 12px rgba(30,27,75,0.05)';
 
 var S = {
   input: {
-    width: '100%', padding: '10px 13px', borderRadius: 12, border: 'none',
-    background: 'var(--m-bg)', color: 'var(--m-text)', fontSize: 13,
+    width: '100%', padding: '10px 13px', borderRadius: '12px 4px 12px 12px',
+    border: '1px solid rgba(255,255,255,0.85)',
+    background: 'rgba(255,255,255,0.7)',
+    backdropFilter: 'blur(8px)',
+    color: 'var(--t1)', fontSize: 13,
     fontFamily: 'inherit', boxSizing: 'border-box', outline: 'none',
-    boxShadow: NEU_IN,
   },
   label: {
-    fontSize: 10, fontWeight: 700, color: 'var(--m-muted)',
+    fontSize: 10, fontWeight: 700, color: 'var(--t3)',
     letterSpacing: '0.1em', textTransform: 'uppercase',
     marginBottom: 6, display: 'block',
   },
   sec: { marginBottom: 20 },
   btn: {
-    padding: '10px 18px', borderRadius: 12, border: 'none',
-    background: 'var(--m-bg)', color: 'var(--m-text)',
+    padding: '10px 18px', borderRadius: '14px 6px 14px 14px', border: 'none',
+    background: 'rgba(255,255,255,0.8)', color: 'var(--t1)',
     fontSize: 13, fontWeight: 700, cursor: 'pointer',
-    boxShadow: NEU_OUT, fontFamily: 'inherit',
+    boxShadow: SHADOW, fontFamily: 'inherit',
   },
   btnAccent: {
-    padding: '10px 18px', borderRadius: 12, border: 'none',
-    background: 'var(--m-bg)', color: 'var(--accent)',
+    padding: '10px 18px', borderRadius: '14px 6px 14px 14px', border: 'none',
+    background: 'var(--sb-bg)', color: '#fff',
     fontSize: 13, fontWeight: 700, cursor: 'pointer',
-    boxShadow: NEU_OUT, fontFamily: 'inherit',
+    boxShadow: 'var(--shadow-btn)', fontFamily: 'inherit',
   },
 };
 
@@ -158,21 +165,21 @@ export function ModalDeal(p) {
   },
     ce('div', {
       style: {
-        background: 'var(--m-bg)', width: '100%', maxWidth: 520,
+        background: 'rgba(245,243,255,0.97)', backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)', width: '100%', maxWidth: 520,
         borderRadius: '24px 24px 0 0', maxHeight: '92vh', overflowY: 'auto',
         padding: '28px 24px 40px',
-        boxShadow: '0 -8px 40px rgba(140,120,100,0.25)',
+        boxShadow: '0 -8px 40px rgba(30,27,75,0.2)',
       }
     },
       // Header
       ce('div', { style: { display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 24 } },
         ce('div', null,
-          ce('div', { style: { fontSize: 18, fontWeight: 700, color: 'var(--m-text)' } }, 'Karta Deala'),
+          ce('div', { style: { fontSize: 18, fontWeight: 700, color: 'var(--t1)' } }, 'Karta Deala'),
           ce('div', { style: { fontSize: 13, color: 'var(--m-muted)', marginTop: 3 } }, clientName),
         ),
         ce('button', {
           onClick: p.onClose,
-          style: { border: 'none', background: 'var(--m-bg)', fontSize: 20, cursor: 'pointer', color: 'var(--m-muted)', borderRadius: 10, width: 36, height: 36, boxShadow: NEU_OUT, display: 'flex', alignItems: 'center', justifyContent: 'center' },
+          style: { border: 'none', background: 'var(--m-bg)', fontSize: 20, cursor: 'pointer', color: 'var(--t3)', borderRadius: 10, width: 36, height: 36, boxShadow: NEU_OUT, display: 'flex', alignItems: 'center', justifyContent: 'center' },
         }, '\u00D7'),
       ),
 
@@ -305,21 +312,24 @@ function DealCard(cp) {
     return ce('div', Object.assign({ ref: provided.innerRef }, provided.draggableProps, provided.dragHandleProps, {
       onClick: function() { if (!snapshot.isDragging) openDeal(deal); },
       style: Object.assign({}, provided.draggableProps.style, {
-        background: 'var(--m-bg)',
-        borderRadius: 14,
+        background: 'rgba(255,255,255,0.72)',
+        backdropFilter: 'blur(12px)',
+        WebkitBackdropFilter: 'blur(12px)',
+        border: '1px solid rgba(255,255,255,0.9)',
+        borderRadius: '16px 6px 16px 16px',
         padding: '12px 14px',
         marginBottom: 10,
         cursor: snapshot.isDragging ? 'grabbing' : 'grab',
-        boxShadow: snapshot.isDragging ? '8px 8px 24px var(--m-dark), -4px -4px 12px var(--m-light)' : NEU_OUT,
+        boxShadow: snapshot.isDragging ? '0 12px 32px rgba(30,27,75,0.18)' : SHADOW,
         borderTop: '3px solid ' + stage.color,
         userSelect: 'none',
       }),
     }),
-      ce('div', { style: { fontSize: 13, fontWeight: 600, color: 'var(--m-text)', marginBottom: 4 } }, name),
+      ce('div', { style: { fontSize: 13, fontWeight: 600, color: 'var(--t1)', marginBottom: 4 } }, name),
       total > 0 ? ce('div', { style: { fontSize: 12, fontWeight: 700, color: stage.color } }, Math.round(total / 10) * 10 + ' z\u0142') : null,
-      deal.visit_date ? ce('div', { style: { fontSize: 10, color: 'var(--m-muted)', marginTop: 4 } }, '\uD83D\uDCCF Pomiar: ' + fmtDate(deal.visit_date)) : null,
-      deal.delivery_date ? ce('div', { style: { fontSize: 10, color: 'var(--m-muted)' } }, '\uD83D\uDE9A Montaż: ' + fmtDate(deal.delivery_date)) : null,
-      deal.notes ? ce('div', { style: { fontSize: 11, color: 'var(--m-muted)', marginTop: 6, overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' } }, deal.notes) : null,
+      deal.visit_date ? ce('div', { style: { fontSize: 10, color: 'var(--t3)', marginTop: 4 } }, '\uD83D\uDCCF Pomiar: ' + fmtDate(deal.visit_date)) : null,
+      deal.delivery_date ? ce('div', { style: { fontSize: 10, color: 'var(--t3)' } }, '\uD83D\uDE9A Montaż: ' + fmtDate(deal.delivery_date)) : null,
+      deal.notes ? ce('div', { style: { fontSize: 11, color: 'var(--t3)', marginTop: 6, overflow: 'hidden', textOverflow: 'ellipsis', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' } }, deal.notes) : null,
     );
   });
 }
@@ -329,19 +339,19 @@ function KanbanCol(kp) {
   var stageDeals = (deals || []).filter(function(d) { return d.stage === stage.id; });
 
   return ce('div', { style: { flex: '1 1 0', minWidth: 180, maxWidth: 260 } },
-    ce('div', { style: { background: 'var(--m-bg)', borderRadius: 16, padding: '12px 10px', height: '100%', boxShadow: NEU_IN } },
-      ce('div', { style: { display: 'flex', alignItems: 'center', gap: 7, marginBottom: 12, paddingBottom: 10, borderBottom: '1px solid var(--m-dark)' } },
+    ce('div', { style: { background: 'rgba(255,255,255,0.5)', backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)', border: '1px solid rgba(255,255,255,0.8)', borderRadius: '20px 6px 20px 20px', padding: '12px 10px', height: '100%', boxShadow: SHADOW } },
+      ce('div', { style: { display: 'flex', alignItems: 'center', gap: 7, marginBottom: 12, paddingBottom: 10, borderBottom: '1px solid rgba(30,27,75,0.07)' } },
         ce('div', { style: { width: 10, height: 10, borderRadius: '50%', background: stage.color, boxShadow: '2px 2px 4px var(--m-dark), -1px -1px 3px var(--m-light)', flexShrink: 0 } }),
-        ce('div', { style: { fontSize: 11, fontWeight: 700, color: 'var(--m-text)', letterSpacing: '0.06em', textTransform: 'uppercase', flex: 1 } }, stage.label),
-        stageDeals.length > 0 ? ce('div', { style: { fontSize: 11, color: 'var(--m-muted)', background: 'var(--m-bg)', borderRadius: 20, padding: '2px 7px', boxShadow: NEU_SM } }, stageDeals.length) : null,
+        ce('div', { style: { fontSize: 11, fontWeight: 700, color: 'var(--t1)', letterSpacing: '0.06em', textTransform: 'uppercase', flex: 1 } }, stage.label),
+        stageDeals.length > 0 ? ce('div', { style: { fontSize: 11, color: 'var(--t3)', background: 'rgba(255,255,255,0.8)', borderRadius: 20, padding: '2px 7px', boxShadow: SHADOW_SM } }, stageDeals.length) : null,
       ),
       ce(Droppable, { droppableId: stage.id }, function(provided, snapshot) {
-        return ce('div', Object.assign({ ref: provided.innerRef, style: { minHeight: 60, background: snapshot.isDraggingOver ? 'rgba(74,138,114,0.06)' : 'transparent', borderRadius: 10, padding: '2px 0', transition: 'background .15s' } }, provided.droppableProps),
+        return ce('div', Object.assign({ ref: provided.innerRef, style: { minHeight: 60, background: snapshot.isDraggingOver ? 'rgba(167,139,250,0.06)' : 'transparent', borderRadius: 10, padding: '2px 0', transition: 'background .15s' } }, provided.droppableProps),
           stageDeals.map(function(deal, i) {
             return ce(DealCard, { key: deal.id, deal: deal, stage: stage, index: i, clients: kp.clients, openDeal: kp.openDeal });
           }),
           provided.placeholder,
-          stageDeals.length === 0 && !snapshot.isDraggingOver ? ce('div', { style: { fontSize: 11, color: 'var(--m-muted)', textAlign: 'center', padding: '20px 0', opacity: 0.5 } }, 'Brak') : null,
+          stageDeals.length === 0 && !snapshot.isDraggingOver ? ce('div', { style: { fontSize: 11, color: 'var(--t3)', textAlign: 'center', padding: '20px 0', opacity: 0.5 } }, 'Brak') : null,
         );
       }),
     ),
@@ -437,8 +447,8 @@ export function ScreenCRM(p) {
   return ce('div', null,
 
     // Panel Google Calendar
-    ce('div', { style: { display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20, background: 'var(--m-bg)', borderRadius: 14, padding: '12px 16px', boxShadow: NEU_IN } },
-      ce('span', { style: { fontSize: 13, fontWeight: 600, color: 'var(--m-text)', flex: 1 } },
+    ce('div', { style: { display: 'flex', alignItems: 'center', gap: 10, marginBottom: 20, background: 'rgba(255,255,255,0.65)', backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)', border: '1px solid rgba(255,255,255,0.85)', borderRadius: '14px 6px 14px 14px', padding: '12px 16px', boxShadow: SHADOW } },
+      ce('span', { style: { fontSize: 13, fontWeight: 600, color: 'var(--t1)', flex: 1 } },
         gcalToken ? '\u2713 Google Calendar po\u0142\u0105czony' : 'Google Calendar',
       ),
       gcalToken
@@ -451,7 +461,7 @@ export function ScreenCRM(p) {
       ce('select', {
         value: newClientId,
         onChange: function(e) { setNewClientId(e.target.value); },
-        style: { flex: 1, ...S.input },
+        style: { flex: 1, padding: '10px 13px', borderRadius: '12px 4px 12px 12px', border: '1px solid rgba(255,255,255,0.85)', background: 'rgba(255,255,255,0.7)', backdropFilter: 'blur(8px)', color: 'var(--t1)', fontSize: 13, fontFamily: 'inherit', outline: 'none', appearance: 'none' },
       },
         ce('option', { value: '' }, 'Wybierz klienta\u2026'),
         clientsForSelect.map(function(cl) { return ce('option', { key: cl.id, value: cl.id }, cl.name); }),

@@ -1,81 +1,103 @@
 /* ══════════════════════════════════════════════
-   ASYSTENT DEKORACJI — Design System
-   Paleta: szałwia sidebar + krem main, neumorphism
+   ASYSTENT DEKORACJI — Design System v2
+   Glassmorphism + organiczne kształty
    ══════════════════════════════════════════════ */
 
 :root {
-  /* ── Sidebar ── */
-  --sb-bg:      #8fada0;
-  --sb-dark:    #6e8c80;
-  --sb-light:   #b0cec0;
-  --sb-text:    rgba(240, 248, 244, 0.95);
-  --sb-muted:   rgba(240, 248, 244, 0.45);
-  --sb-accent:  #c8f0e0;
+  /* Tło */
+  --bg:        #f5f3ff;
+  --bg-glass:  rgba(255,255,255,0.68);
+  --bg-glass2: rgba(255,255,255,0.85);
 
-  /* ── Main area ── */
-  --m-bg:       #ede8e2;
-  --m-dark:     #d0c8c0;
-  --m-light:    #ffffff;
-  --m-text:     #2e2820;
-  --m-muted:    #a89888;
+  /* Sidebar */
+  --sb-bg:     #1e1b4b;
+  --sb-text:   rgba(255,255,255,0.9);
+  --sb-muted:  rgba(255,255,255,0.3);
+  --sb-active: rgba(167,139,250,0.18);
+  --sb-border: rgba(255,255,255,0.07);
 
-  /* ── Akcenty ── */
-  --accent:     #4a8a72;
-  --accent-lav: #7868b0;
-  --accent-ros: #b06880;
+  /* Akcenty */
+  --violet:    #a78bfa;
+  --violet2:   #7c3aed;
+  --teal:      #34d399;
+  --teal2:     #059669;
+  --pink:      #f9a8d4;
+  --pink2:     #db2777;
 
-  /* ── Spacing ── */
-  --r-sm:   10px;
-  --r-md:   14px;
-  --r-lg:   18px;
-  --r-xl:   24px;
+  /* Gradient główny */
+  --grad:      linear-gradient(135deg, #a78bfa, #34d399);
+  --grad-dark: linear-gradient(135deg, #1e1b4b 0%, #312e81 60%, #4338ca 100%);
 
-  /* ── Neumorphism shadows — main ── */
-  --neu-out:    6px 6px 16px var(--m-dark), -4px -4px 12px var(--m-light);
-  --neu-in:     inset 4px 4px 10px var(--m-dark), inset -3px -3px 8px var(--m-light);
-  --neu-sm:     3px 3px 8px var(--m-dark), -2px -2px 6px var(--m-light);
+  /* Tekst */
+  --t1:  #1e1b4b;
+  --t2:  #4b5563;
+  --t3:  #a0aec0;
 
-  /* ── Neumorphism shadows — sidebar ── */
-  --neu-sb-out: 5px 5px 13px var(--sb-dark), -3px -3px 9px var(--sb-light);
-  --neu-sb-in:  inset 3px 3px 8px var(--sb-dark), inset -2px -2px 6px var(--sb-light);
+  /* Blobsy holograficzne */
+  --blob1: #c4b5fd;
+  --blob2: #6ee7b7;
+  --blob3: #fda4af;
+  --blob4: #93c5fd;
+
+  /* Border-radius organiczne */
+  --r-tl:  24px 6px 24px 24px;
+  --r-tr:  6px 24px 24px 24px;
+  --r-br:  24px 24px 6px 24px;
+  --r-bl:  24px 24px 24px 6px;
+  --r-full: 24px;
+  --r-btn: 20px 8px 20px 8px;
+  --r-btn2: 8px 20px 8px 20px;
+
+  /* Cienie */
+  --shadow-card:  0 4px 24px rgba(30,27,75,0.07);
+  --shadow-hero:  0 8px 32px rgba(30,27,75,0.18);
+  --shadow-btn:   0 6px 20px rgba(30,27,75,0.22);
+  --shadow-grad:  0 6px 24px rgba(167,139,250,0.35);
 }
 
-/* ── Reset ── */
-*, *::before, *::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-html, body, #root {
-  height: 100%;
-  width: 100%;
-}
+html, body, #root { height: 100%; width: 100%; }
 
 body {
   font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
   font-size: 14px;
   line-height: 1.5;
-  background: var(--m-bg);
-  color: var(--m-text);
+  background: var(--bg);
+  color: var(--t1);
   -webkit-font-smoothing: antialiased;
+  overflow: hidden;
 }
 
-button {
-  font-family: inherit;
-  cursor: pointer;
-}
-
-input, textarea, select {
-  font-family: inherit;
-}
-
-/* ── Utility ── */
-.neu-out  { box-shadow: var(--neu-out); }
-.neu-in   { box-shadow: var(--neu-in); }
-.neu-sm   { box-shadow: var(--neu-sm); }
+button { font-family: inherit; cursor: pointer; }
+input, textarea, select { font-family: inherit; }
 
 /* ── Scrollbar ── */
-::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar { width: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
-::-webkit-scrollbar-thumb { background: var(--m-dark); border-radius: 3px; }
+::-webkit-scrollbar-thumb { background: rgba(167,139,250,0.3); border-radius: 3px; }
+
+/* ── Utility klasy ── */
+.glass {
+  background: var(--bg-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255,255,255,0.85);
+}
+
+.glass2 {
+  background: var(--bg-glass2);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border: 1px solid rgba(255,255,255,0.95);
+}
+
+/* Holograficzne blobsy — używać w App.jsx jako div.blob */
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(72px);
+  opacity: 0.5;
+  pointer-events: none;
+  z-index: 0;
+}
