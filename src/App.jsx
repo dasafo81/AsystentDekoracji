@@ -153,53 +153,54 @@ export default function App() {
       <main style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', position: 'relative', zIndex: 1 }}>
 
         {/* Topbar */}
-        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', padding: '28px 32px 0', flexShrink: 0 }}>
-          <div>
-            <div style={{ fontSize: 26, fontWeight: 800, color: '#1e1b4b', letterSpacing: '-0.5px' }}>{cur?.label}</div>
-            <div style={{ fontSize: 12, color: '#a0aec0', marginTop: 4 }}>{dzisiaj()}</div>
-          </div>
-
-          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-            {/* Przełącznik widoku dla klientów */}
-            {screen === 'crm' && (
-              <div style={{
-                display: 'flex', background: 'rgba(255,255,255,0.6)', backdropFilter: 'blur(10px)',
-                border: '1px solid rgba(255,255,255,0.85)', borderRadius: '14px 6px 14px 14px',
-                padding: 4, gap: 2,
-              }}>
-                {[['klienci','ti-users'],['kanban','ti-layout-kanban']].map(function(v) {
-                  var active = crmView === v[0]
-                  return (
-                    <button key={v[0]} onClick={function() { setCrmView(v[0]) }} style={{
-                      border: 'none', borderRadius: active ? '10px 4px 10px 10px' : 8,
-                      background: active ? '#1e1b4b' : 'transparent',
-                      color: active ? '#fff' : '#a0aec0',
-                      padding: '7px 12px', cursor: 'pointer', fontSize: 14,
-                      transition: 'all 0.15s',
-                    }}>
-                      <i className={'ti ' + v[1]} aria-hidden="true" />
-                    </button>
-                  )
-                })}
-              </div>
-            )}
-
+        <div style={{ padding: '28px 32px 0', flexShrink: 0 }}>
+          <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 20 }}>
+            <div>
+              <div style={{ fontSize: 26, fontWeight: 800, color: '#1e1b4b', letterSpacing: '-0.5px' }}>{cur?.label}</div>
+              <div style={{ fontSize: 12, color: '#a0aec0', marginTop: 4 }}>{dzisiaj()}</div>
+            </div>
             {btnLabel && (
-              <button
-                onClick={function() { setShowNewClient(true) }}
-                style={{
-                  background: '#1e1b4b', color: '#fff', border: 'none',
-                  borderRadius: '20px 8px 20px 8px',
-                  padding: '12px 22px', fontSize: 13, fontWeight: 700,
-                  cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8,
-                  boxShadow: '0 6px 20px rgba(30,27,75,0.22)',
-                  fontFamily: 'inherit',
-                }}>
+              <button onClick={function() { setShowNewClient(true) }} style={{
+                background: '#1e1b4b', color: '#fff', border: 'none',
+                borderRadius: '20px 8px 20px 8px', padding: '12px 22px',
+                fontSize: 13, fontWeight: 700, cursor: 'pointer',
+                display: 'flex', alignItems: 'center', gap: 8,
+                boxShadow: '0 6px 20px rgba(30,27,75,0.22)', fontFamily: 'inherit',
+              }}>
                 <i className="ti ti-plus" style={{ fontSize: 16 }} aria-hidden="true" />
                 {crmView === 'klienci' ? 'Nowy klient' : 'Nowy deal'}
               </button>
             )}
           </div>
+
+          {screen === 'crm' && (
+            <div style={{ display: 'flex', gap: 8, marginBottom: 4 }}>
+              {[
+                { id: 'klienci', label: 'Lista klientów', icon: 'ti-users' },
+                { id: 'kanban',  label: 'Kanban CRM',     icon: 'ti-layout-kanban' },
+              ].map(function(tab) {
+                var active = crmView === tab.id
+                return (
+                  <button key={tab.id} onClick={function() { setCrmView(tab.id) }} style={{
+                    display: 'flex', alignItems: 'center', gap: 8,
+                    padding: '10px 20px',
+                    border: active ? 'none' : '1px solid rgba(255,255,255,0.85)',
+                    borderRadius: '14px 4px 14px 14px',
+                    background: active ? '#1e1b4b' : 'rgba(255,255,255,0.65)',
+                    backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)',
+                    color: active ? '#fff' : '#6b7280',
+                    fontSize: 13, fontWeight: active ? 700 : 500,
+                    cursor: 'pointer', fontFamily: 'inherit',
+                    boxShadow: active ? '0 4px 16px rgba(30,27,75,0.2)' : '0 2px 8px rgba(30,27,75,0.05)',
+                    transition: 'all 0.15s',
+                  }}>
+                    <i className={'ti ' + tab.icon} style={{ fontSize: 15 }} aria-hidden="true" />
+                    {tab.label}
+                  </button>
+                )
+              })}
+            </div>
+          )}
         </div>
 
         {/* Treść */}
