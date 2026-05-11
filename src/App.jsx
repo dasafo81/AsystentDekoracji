@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { sbApi } from './supabase.js'
 import { gcalWaitReady, gcalGetToken, gcalHasValidToken } from './gcal.js'
 import { ScreenCRM } from './ScreenCRM.jsx'
+import { ScreenKlienci } from './ScreenKlienci.jsx'
 
 var NAV = [
   { id: 'crm',        label: 'Klienci',    icon: 'ti-users' },
@@ -15,7 +16,7 @@ var NAV = [
 
 function ScreenPlaceholder({ name }) {
   return (
-    <div style={{ padding: '32px' }}>
+    <div style={{ padding: '0' }}>
       <div style={{
         background: 'rgba(255,255,255,0.65)',
         backdropFilter: 'blur(16px)',
@@ -27,8 +28,8 @@ function ScreenPlaceholder({ name }) {
         boxShadow: '0 4px 24px rgba(30,27,75,0.07)',
       }}>
         <div style={{ fontSize: 36, marginBottom: 14 }}>🚧</div>
-        <div style={{ fontWeight: 800, color: 'var(--t1)', fontSize: 16, marginBottom: 6 }}>{name}</div>
-        <div style={{ color: 'var(--t3)', fontSize: 13 }}>Moduł w budowie</div>
+        <div style={{ fontWeight: 800, color: '#1e1b4b', fontSize: 16, marginBottom: 6 }}>{name}</div>
+        <div style={{ color: '#a0aec0', fontSize: 13 }}>Moduł w budowie</div>
       </div>
     </div>
   )
@@ -41,11 +42,13 @@ function dzisiaj() {
 }
 
 export default function App() {
-  const [screen, setScreen]         = useState('crm')
-  const [clients, setClients]       = useState([])
+  const [screen, setScreen]           = useState('crm')
+  const [clients, setClients]         = useState([])
   const [curClientId, setCurClientId] = useState(null)
-  const [gcalToken, setGcalToken]   = useState(null)
-  const [gsiReady, setGsiReady]     = useState(false)
+  const [gcalToken, setGcalToken]     = useState(null)
+  const [gsiReady, setGsiReady]       = useState(false)
+  const [showNewClient, setShowNewClient] = useState(false)
+  const [crmView, setCrmView]         = useState('klienci') // 'klienci' | 'kanban'
 
   useEffect(function() {
     sbApi.getClients().then(function(d) { setClients(d || []) }).catch(function() {})
@@ -62,25 +65,26 @@ export default function App() {
 
   var cur = NAV.find(function(n) { return n.id === screen })
 
+  var btnLabel = screen === 'crm'
+    ? (crmView === 'klienci' ? '+ Nowy klient' : '+ Nowy deal')
+    : null
+
   return (
     <div style={{ display: 'flex', height: '100vh', width: '100vw', overflow: 'hidden', position: 'relative', background: 'var(--bg)' }}>
 
-      {/* ── Holograficzne blobsy ── */}
+      {/* Holograficzne blobsy */}
       <div className="blob" style={{ width: 420, height: 420, background: 'var(--blob1)', top: -140, left: 60 }} />
       <div className="blob" style={{ width: 320, height: 320, background: 'var(--blob2)', top: 220, right: -80 }} />
       <div className="blob" style={{ width: 260, height: 260, background: 'var(--blob3)', bottom: -60, left: 280 }} />
       <div className="blob" style={{ width: 200, height: 200, background: 'var(--blob4)', bottom: 100, right: 200 }} />
 
-      {/* ── Sidebar ── */}
+      {/* Sidebar */}
       <aside style={{
-        width: 230,
-        flexShrink: 0,
+        width: 230, flexShrink: 0,
         background: 'var(--sb-bg)',
-        display: 'flex',
-        flexDirection: 'column',
+        display: 'flex', flexDirection: 'column',
         padding: '24px 0',
-        position: 'relative',
-        zIndex: 10,
+        position: 'relative', zIndex: 10,
         boxShadow: '4px 0 32px rgba(30,27,75,0.25)',
       }}>
 
@@ -94,10 +98,8 @@ export default function App() {
               fontSize: 20, fontWeight: 900, color: '#fff', flexShrink: 0,
               boxShadow: '0 4px 20px rgba(167,139,250,0.5)',
             }}>A</div>
-            <div>
-              <div style={{ fontSize: 15, fontWeight: 800, color: 'var(--sb-text)', lineHeight: 1.2 }}>
-                Asystent<br />Dekoracji
-              </div>
+            <div style={{ fontSize: 15, fontWeight: 800, color: 'var(--sb-text)', lineHeight: 1.2 }}>
+              Asystent<br />Dekoracji
             </div>
           </div>
           <div style={{ fontSize: 10, color: 'var(--sb-muted)', letterSpacing: '0.08em', paddingLeft: 54 }}>
@@ -110,28 +112,19 @@ export default function App() {
           {NAV.map(function(item) {
             var active = screen === item.id
             return (
-              <div
-                key={item.id}
-                onClick={function() { setScreen(item.id) }}
-                style={{
-                  display: 'flex', alignItems: 'center', gap: 11,
-                  padding: '11px 14px',
-                  borderRadius: active ? '14px 6px 14px 14px' : '12px',
-                  cursor: 'pointer',
-                  color: active ? '#fff' : 'var(--sb-muted)',
-                  fontWeight: active ? 700 : 400,
-                  fontSize: 13,
-                  background: active ? 'var(--sb-active)' : 'transparent',
-                  borderLeft: active ? '3px solid #a78bfa' : '3px solid transparent',
-                  transition: 'all 0.15s',
-                  position: 'relative',
-                }}
-              >
-                <i
-                  className={'ti ' + item.icon}
-                  style={{ fontSize: 18, color: active ? '#a78bfa' : 'inherit', flexShrink: 0 }}
-                  aria-hidden="true"
-                />
+              <div key={item.id} onClick={function() { setScreen(item.id) }} style={{
+                display: 'flex', alignItems: 'center', gap: 11,
+                padding: '11px 14px',
+                borderRadius: active ? '14px 6px 14px 14px' : '12px',
+                cursor: 'pointer',
+                color: active ? '#fff' : 'var(--sb-muted)',
+                fontWeight: active ? 700 : 400,
+                fontSize: 13,
+                background: active ? 'var(--sb-active)' : 'transparent',
+                borderLeft: active ? '3px solid #a78bfa' : '3px solid transparent',
+                transition: 'all 0.15s',
+              }}>
+                <i className={'ti ' + item.icon} style={{ fontSize: 18, color: active ? '#a78bfa' : 'inherit', flexShrink: 0 }} aria-hidden="true" />
                 {item.label}
               </div>
             )
@@ -156,51 +149,77 @@ export default function App() {
         </div>
       </aside>
 
-      {/* ── Main ── */}
-      <main style={{
-        flex: 1,
-        display: 'flex',
-        flexDirection: 'column',
-        overflow: 'hidden',
-        position: 'relative',
-        zIndex: 1,
-      }}>
+      {/* Main */}
+      <main style={{ flex: 1, display: 'flex', flexDirection: 'column', overflow: 'hidden', position: 'relative', zIndex: 1 }}>
 
         {/* Topbar */}
-        <div style={{
-          display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between',
-          padding: '28px 32px 0',
-          flexShrink: 0,
-        }}>
+        <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', padding: '28px 32px 0', flexShrink: 0 }}>
           <div>
-            <div style={{ fontSize: 26, fontWeight: 800, color: 'var(--t1)', letterSpacing: '-0.5px' }}>
-              {cur?.label}
-            </div>
-            <div style={{ fontSize: 12, color: 'var(--t3)', marginTop: 4 }}>{dzisiaj()}</div>
+            <div style={{ fontSize: 26, fontWeight: 800, color: '#1e1b4b', letterSpacing: '-0.5px' }}>{cur?.label}</div>
+            <div style={{ fontSize: 12, color: '#a0aec0', marginTop: 4 }}>{dzisiaj()}</div>
           </div>
 
-          {screen === 'crm' && (
-            <button
-              style={{
-                background: 'var(--sb-bg)',
-                color: '#fff', border: 'none',
-                borderRadius: '20px 8px 20px 8px',
-                padding: '12px 22px',
-                fontSize: 13, fontWeight: 700,
-                cursor: 'pointer',
-                display: 'flex', alignItems: 'center', gap: 8,
-                boxShadow: 'var(--shadow-btn)',
-              }}
-            >
-              <i className="ti ti-plus" style={{ fontSize: 16 }} aria-hidden="true" />
-              Nowy klient
-            </button>
-          )}
+          <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+            {/* Przełącznik widoku dla klientów */}
+            {screen === 'crm' && (
+              <div style={{
+                display: 'flex', background: 'rgba(255,255,255,0.6)', backdropFilter: 'blur(10px)',
+                border: '1px solid rgba(255,255,255,0.85)', borderRadius: '14px 6px 14px 14px',
+                padding: 4, gap: 2,
+              }}>
+                {[['klienci','ti-users'],['kanban','ti-layout-kanban']].map(function(v) {
+                  var active = crmView === v[0]
+                  return (
+                    <button key={v[0]} onClick={function() { setCrmView(v[0]) }} style={{
+                      border: 'none', borderRadius: active ? '10px 4px 10px 10px' : 8,
+                      background: active ? '#1e1b4b' : 'transparent',
+                      color: active ? '#fff' : '#a0aec0',
+                      padding: '7px 12px', cursor: 'pointer', fontSize: 14,
+                      transition: 'all 0.15s',
+                    }}>
+                      <i className={'ti ' + v[1]} aria-hidden="true" />
+                    </button>
+                  )
+                })}
+              </div>
+            )}
+
+            {btnLabel && (
+              <button
+                onClick={function() { setShowNewClient(true) }}
+                style={{
+                  background: '#1e1b4b', color: '#fff', border: 'none',
+                  borderRadius: '20px 8px 20px 8px',
+                  padding: '12px 22px', fontSize: 13, fontWeight: 700,
+                  cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 8,
+                  boxShadow: '0 6px 20px rgba(30,27,75,0.22)',
+                  fontFamily: 'inherit',
+                }}>
+                <i className="ti ti-plus" style={{ fontSize: 16 }} aria-hidden="true" />
+                {crmView === 'klienci' ? 'Nowy klient' : 'Nowy deal'}
+              </button>
+            )}
+          </div>
         </div>
 
         {/* Treść */}
         <div style={{ flex: 1, overflowY: 'auto', padding: '24px 32px 40px' }}>
-          {screen === 'crm' && (
+          {screen === 'crm' && crmView === 'klienci' && (
+            <ScreenKlienci
+              clients={clients}
+              showNewClient={showNewClient}
+              onCloseNewClient={function() { setShowNewClient(false) }}
+              onClientAdded={function(cl) {
+                setClients(function(prev) { return [cl].concat(prev) })
+                setShowNewClient(false)
+              }}
+              onClientClick={function(cl) {
+                setCurClientId(cl.id)
+                // TODO: otworzyć widok szczegółów klienta
+              }}
+            />
+          )}
+          {screen === 'crm' && crmView === 'kanban' && (
             <ScreenCRM
               clients={clients}
               setScreen={setScreen}
@@ -208,12 +227,12 @@ export default function App() {
               gcalToken={gcalToken}
               setGcalToken={setGcalToken}
               gsiReady={gsiReady}
+              showNewClient={showNewClient}
+              onCloseNewClient={function() { setShowNewClient(false) }}
               onClientStatusChange={function(clientId, status) {
                 setClients(function(prev) {
                   return prev.map(function(c) {
-                    return String(c.id) === String(clientId)
-                      ? Object.assign({}, c, { status })
-                      : c
+                    return String(c.id) === String(clientId) ? Object.assign({}, c, { status }) : c
                   })
                 })
               }}
