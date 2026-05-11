@@ -3,6 +3,7 @@ import { sbApi } from './supabase.js'
 import { gcalWaitReady, gcalGetToken, gcalHasValidToken } from './gcal.js'
 import { ScreenCRM } from './ScreenCRM.jsx'
 import { ScreenKlienci } from './ScreenKlienci.jsx'
+import { BlobToggle } from './BlobToggle.jsx'
 
 var NAV = [
   { id: 'crm',        label: 'Klienci',    icon: 'ti-users' },
@@ -174,31 +175,15 @@ export default function App() {
           </div>
 
           {screen === 'crm' && (
-            <div style={{ display: 'flex', gap: 8, marginBottom: 4 }}>
-              {[
-                { id: 'klienci', label: 'Lista klientów', icon: 'ti-users' },
-                { id: 'kanban',  label: 'Kanban CRM',     icon: 'ti-layout-kanban' },
-              ].map(function(tab) {
-                var active = crmView === tab.id
-                return (
-                  <button key={tab.id} onClick={function() { setCrmView(tab.id) }} style={{
-                    display: 'flex', alignItems: 'center', gap: 8,
-                    padding: '10px 20px',
-                    border: active ? 'none' : '1px solid rgba(255,255,255,0.85)',
-                    borderRadius: '14px 4px 14px 14px',
-                    background: active ? '#1e1b4b' : 'rgba(255,255,255,0.65)',
-                    backdropFilter: 'blur(10px)', WebkitBackdropFilter: 'blur(10px)',
-                    color: active ? '#fff' : '#6b7280',
-                    fontSize: 13, fontWeight: active ? 700 : 500,
-                    cursor: 'pointer', fontFamily: 'inherit',
-                    boxShadow: active ? '0 4px 16px rgba(30,27,75,0.2)' : '0 2px 8px rgba(30,27,75,0.05)',
-                    transition: 'all 0.15s',
-                  }}>
-                    <i className={'ti ' + tab.icon} style={{ fontSize: 15 }} aria-hidden="true" />
-                    {tab.label}
-                  </button>
-                )
-              })}
+            <div style={{ marginBottom: 4 }}>
+              <BlobToggle
+                value={crmView === 'klienci' ? 0 : 1}
+                onChange={function(i) { setCrmView(i === 0 ? 'klienci' : 'kanban') }}
+                options={[
+                  { label: 'Lista klientów', icon: 'ti-users' },
+                  { label: 'Kanban CRM',     icon: 'ti-layout-kanban' },
+                ]}
+              />
             </div>
           )}
         </div>
