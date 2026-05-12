@@ -7,7 +7,7 @@ import {
   SELLER, buildFabricRows, buildSewingRows, calc,
   getPDFOfferNumber, getPanelsForProd, makeTableHTML, mg,
   openPDFWindow, pdfStyles, roundTo10
-} from '../constants/data.js';
+} from './data.js';
 
 export function generateFabricOrderPDF(client){
   var rows=buildFabricRows(client);
