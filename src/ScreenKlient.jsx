@@ -67,7 +67,6 @@ export function ScreenKlient(p) {
     }).then(function() {
       setSaveStatus('ok');
       setTimeout(function() { setSaveStatus(null); }, 1500);
-      p.onSave && p.onSave(updated);
     }).catch(function(e) {
       console.error('Błąd zapisu:', e);
       setSaveStatus('error');
@@ -75,11 +74,10 @@ export function ScreenKlient(p) {
   }
 
   function updateClient(fn) {
-    setClientLocal(function(cl) {
-      var updated = fn(cl);
-      saveClientToSb(updated);
-      return updated;
-    });
+    var updated = fn(client);
+    setClientLocal(updated);
+    saveClientToSb(updated);
+    p.onSave && p.onSave(updated);
   }
 
   // ── Nawigacja ─────────────────────────────────────────────────────────────
