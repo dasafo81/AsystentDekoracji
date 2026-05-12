@@ -264,7 +264,14 @@ export default function App() {
           {screen === 'zlecenia' && <ScreenZlecenia clients={clients} />}
           {screen === 'poczta' && <ScreenMail clients={clients} />}
           {screen === 'zadania' && <ScreenTasks />}
-          {screen === 'kalendarz' && <ScreenKalendarz clients={clients} />}
+          {screen === 'kalendarz' && (
+            <ScreenKalendarz
+              clients={clients}
+              gcalToken={gcalToken}
+              setGcalToken={setGcalToken}
+              gsiReady={gsiReady}
+            />
+          )}
         </div>
       </main>
 
