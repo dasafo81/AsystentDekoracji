@@ -6,6 +6,7 @@ import { ScreenKlienci } from './ScreenKlienci.jsx'
 import { ScreenKlient } from './ScreenKlient.jsx'
 import { BlobToggle } from './BlobToggle.jsx'
 import { ScreenTasks } from './ScreenTasks.jsx'
+import { ScreenWyceny } from './ScreenWyceny.jsx'
 import { ScreenMail } from './ScreenMail.jsx'
 
 var NAV = [
@@ -230,7 +231,15 @@ export default function App() {
               }}
             />
           )}
-          {screen === 'wyceny' && !openClient && <ScreenPlaceholder name="Wyceny — wybierz klienta z listy Klientów" />}
+          {screen === 'wyceny' && !openClient && (
+            <ScreenWyceny
+              clients={clients}
+              onClientClick={function(cl) {
+                setCurClientId(cl.id)
+                setOpenClient(cl)
+              }}
+            />
+          )}
           {screen === 'wyceny' && openClient && (
             <ScreenKlient
               client={openClient}
