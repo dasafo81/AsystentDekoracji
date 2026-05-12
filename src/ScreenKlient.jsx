@@ -62,8 +62,8 @@ export function ScreenKlient(p) {
       name: updated.name, addr: updated.addr || '',
       phone: updated.phone || '', email: updated.email || '',
       rooms: updated.rooms,
-      commission: updated.commission || '',
-      install_fee: updated.install_fee || '',
+      commission: updated.commission ? +updated.commission : null,
+      install_fee: updated.install_fee ? +updated.install_fee : null,
     }).then(function() {
       setSaveStatus('ok');
       setTimeout(function() { setSaveStatus(null); }, 1500);
