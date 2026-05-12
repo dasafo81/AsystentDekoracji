@@ -3,7 +3,7 @@ import { sbApi } from './supabase.js'
 import { gcalWaitReady, gcalGetToken, gcalHasValidToken } from './gcal.js'
 import { ScreenCRM } from './ScreenCRM.jsx'
 import { ScreenKlienci } from './ScreenKlienci.jsx'
-import { ModalRoom } from './ModalRoom.jsx'
+import { ScreenKlient } from './ScreenKlient.jsx'
 import { BlobToggle } from './BlobToggle.jsx'
 
 var NAV = [
@@ -204,6 +204,7 @@ export default function App() {
               onClientClick={function(cl) {
                 setCurClientId(cl.id)
                 setOpenClient(cl)
+                setScreen('klient')
               }}
             />
           )}
@@ -235,21 +236,28 @@ export default function App() {
         </div>
       </main>
 
-      {/* Modal szczegółów klienta */}
-      {openClient && (
-        <ModalRoom
-          client={openClient}
-          clients={clients}
-          onClose={function() { setOpenClient(null) }}
-          onSave={function(updated) {
-            setClients(function(prev) {
-              return prev.map(function(c) {
-                return String(c.id) === String(updated.id) ? updated : c
+      {/* Ekran szczegółów klienta — pełnoekranowy */}
+      {screen === 'klient' && openClient && (
+        <div style={{
+          position: 'fixed', inset: 0, zIndex: 100,
+          background: 'var(--bg)',
+          overflowY: 'auto',
+          padding: '28px 32px 60px',
+        }}>
+          <ScreenKlient
+            client={openClient}
+            clients={clients}
+            onBack={function() { setScreen('crm'); setOpenClient(null) }}
+            onSave={function(updated) {
+              setClients(function(prev) {
+                return prev.map(function(c) {
+                  return String(c.id) === String(updated.id) ? updated : c
+                })
               })
-            })
-            setOpenClient(updated)
-          }}
-        />
+              setOpenClient(updated)
+            }}
+          />
+        </div>
       )}
     </div>
   )

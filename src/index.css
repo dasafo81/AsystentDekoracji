@@ -101,3 +101,18 @@ input, textarea, select { font-family: inherit; }
   pointer-events: none;
   z-index: 0;
 }
+
+/* ── Zmienne kompatybilności z ModalRoom / ProdCard (Porter Design) ── */
+:root {
+  --bg:    #f5f3ff;
+  --bg2:   rgba(255,255,255,0.68);
+  --bg3:   rgba(255,255,255,0.85);
+  --t1:    #1e1b4b;
+  --t2:    #4b5563;
+  --t3:    #a0aec0;
+  --bd1:   rgba(30,27,75,0.15);
+  --bd2:   rgba(255,255,255,0.85);
+  --grl:   rgba(167,139,250,0.12);
+  --acc:   #a78bfa;
+  --acc2:  #7c3aed;
+}
