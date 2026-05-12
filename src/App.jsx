@@ -7,6 +7,9 @@ import { ScreenKlient } from './ScreenKlient.jsx'
 import { BlobToggle } from './BlobToggle.jsx'
 import { ScreenTasks } from './ScreenTasks.jsx'
 import { ScreenWyceny } from './ScreenWyceny.jsx'
+import { ScreenZamowienia } from './ScreenZamowienia.jsx'
+import { ScreenZlecenia } from './ScreenZlecenia.jsx'
+import { ScreenKalendarz } from './ScreenKalendarz.jsx'
 import { ScreenMail } from './ScreenMail.jsx'
 
 var NAV = [
@@ -74,6 +77,8 @@ export default function App() {
 
   var btnLabel = screen === 'crm'
     ? (crmView === 'klienci' ? '+ Nowy klient' : '+ Nowy deal')
+    : screen === 'zadania' ? '+ Nowe zadanie'
+    : screen === 'zamowienia' ? '+ Zamówienie'
     : (screen === 'wyceny' && !openClient ? '+ Nowa wycena' : null)
 
   return (
@@ -255,11 +260,11 @@ export default function App() {
               }}
             />
           )}
-          {screen === 'zamowienia' && <ScreenPlaceholder name="Zamówienia tkanin" />}
-          {screen === 'zlecenia'   && <ScreenPlaceholder name="Zlecenia szycia" />}
+          {screen === 'zamowienia' && <ScreenZamowienia clients={clients} />}
+          {screen === 'zlecenia' && <ScreenZlecenia clients={clients} />}
           {screen === 'poczta' && <ScreenMail clients={clients} />}
           {screen === 'zadania' && <ScreenTasks />}
-          {screen === 'kalendarz'  && <ScreenPlaceholder name="Kalendarz" />}
+          {screen === 'kalendarz' && <ScreenKalendarz clients={clients} />}
         </div>
       </main>
 
