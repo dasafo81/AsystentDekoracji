@@ -67,10 +67,11 @@ export default function App() {
   }, [])
 
   var cur = NAV.find(function(n) { return n.id === screen })
+  var topTitle = (screen === 'wyceny' && openClient) ? openClient.name : cur?.label
 
   var btnLabel = screen === 'crm'
     ? (crmView === 'klienci' ? '+ Nowy klient' : '+ Nowy deal')
-    : null
+    : (screen === 'wyceny' && !openClient ? '+ Nowa wycena' : null)
 
   return (
     <div style={{ display: 'flex', height: '100vh', width: '100vw', overflow: 'hidden', position: 'relative', background: 'var(--bg)' }}>
@@ -159,7 +160,7 @@ export default function App() {
         <div style={{ padding: '28px 32px 0', flexShrink: 0 }}>
           <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 20 }}>
             <div>
-              <div style={{ fontSize: 26, fontWeight: 800, color: '#1e1b4b', letterSpacing: '-0.5px' }}>{cur?.label}</div>
+              <div style={{ fontSize: 26, fontWeight: 800, color: '#1e1b4b', letterSpacing: '-0.5px' }}>{topTitle}</div>
               <div style={{ fontSize: 12, color: '#a0aec0', marginTop: 4 }}>{dzisiaj()}</div>
             </div>
             {btnLabel && (
@@ -204,7 +205,7 @@ export default function App() {
               onClientClick={function(cl) {
                 setCurClientId(cl.id)
                 setOpenClient(cl)
-                setScreen('klient')
+                setScreen('wyceny')
               }}
             />
           )}
@@ -227,7 +228,22 @@ export default function App() {
               }}
             />
           )}
-          {screen === 'wyceny'     && <ScreenPlaceholder name="Wyceny" />}
+          {screen === 'wyceny' && !openClient && <ScreenPlaceholder name="Wyceny — wybierz klienta z listy Klientów" />}
+          {screen === 'wyceny' && openClient && (
+            <ScreenKlient
+              client={openClient}
+              clients={clients}
+              onBack={function() { setScreen('wyceny'); setOpenClient(null) }}
+              onSave={function(updated) {
+                setClients(function(prev) {
+                  return prev.map(function(c) {
+                    return String(c.id) === String(updated.id) ? updated : c
+                  })
+                })
+                setOpenClient(updated)
+              }}
+            />
+          )}
           {screen === 'zamowienia' && <ScreenPlaceholder name="Zamówienia tkanin" />}
           {screen === 'zlecenia'   && <ScreenPlaceholder name="Zlecenia szycia" />}
           {screen === 'poczta'     && <ScreenPlaceholder name="Poczta" />}
@@ -236,29 +252,7 @@ export default function App() {
         </div>
       </main>
 
-      {/* Ekran szczegółów klienta — pełnoekranowy */}
-      {screen === 'klient' && openClient && (
-        <div style={{
-          position: 'fixed', inset: 0, zIndex: 100,
-          background: 'var(--bg)',
-          overflowY: 'auto',
-          padding: '28px 32px 60px',
-        }}>
-          <ScreenKlient
-            client={openClient}
-            clients={clients}
-            onBack={function() { setScreen('crm'); setOpenClient(null) }}
-            onSave={function(updated) {
-              setClients(function(prev) {
-                return prev.map(function(c) {
-                  return String(c.id) === String(updated.id) ? updated : c
-                })
-              })
-              setOpenClient(updated)
-            }}
-          />
-        </div>
-      )}
+
     </div>
   )
 }
