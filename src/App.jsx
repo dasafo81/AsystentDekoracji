@@ -3,6 +3,7 @@ import { sbApi } from './supabase.js'
 import { gcalWaitReady, gcalGetToken, gcalHasValidToken } from './gcal.js'
 import { ScreenCRM } from './ScreenCRM.jsx'
 import { ScreenKlienci } from './ScreenKlienci.jsx'
+import { ModalRoom } from './ModalRoom.jsx'
 import { BlobToggle } from './BlobToggle.jsx'
 
 var NAV = [
@@ -49,6 +50,7 @@ export default function App() {
   const [gcalToken, setGcalToken]     = useState(null)
   const [gsiReady, setGsiReady]       = useState(false)
   const [showNewClient, setShowNewClient] = useState(false)
+  const [openClient, setOpenClient] = useState(null)
   const [crmView, setCrmView]         = useState('klienci') // 'klienci' | 'kanban'
 
   useEffect(function() {
@@ -201,7 +203,7 @@ export default function App() {
               }}
               onClientClick={function(cl) {
                 setCurClientId(cl.id)
-                // TODO: otworzyć widok szczegółów klienta
+                setOpenClient(cl)
               }}
             />
           )}
@@ -232,6 +234,23 @@ export default function App() {
           {screen === 'kalendarz'  && <ScreenPlaceholder name="Kalendarz" />}
         </div>
       </main>
+
+      {/* Modal szczegółów klienta */}
+      {openClient && (
+        <ModalRoom
+          client={openClient}
+          clients={clients}
+          onClose={function() { setOpenClient(null) }}
+          onSave={function(updated) {
+            setClients(function(prev) {
+              return prev.map(function(c) {
+                return String(c.id) === String(updated.id) ? updated : c
+              })
+            })
+            setOpenClient(updated)
+          }}
+        />
+      )}
     </div>
   )
 }
