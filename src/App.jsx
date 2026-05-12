@@ -5,6 +5,8 @@ import { ScreenCRM } from './ScreenCRM.jsx'
 import { ScreenKlienci } from './ScreenKlienci.jsx'
 import { ScreenKlient } from './ScreenKlient.jsx'
 import { BlobToggle } from './BlobToggle.jsx'
+import { ScreenTasks } from './ScreenTasks.jsx'
+import { ScreenMail } from './ScreenMail.jsx'
 
 var NAV = [
   { id: 'crm',        label: 'Klienci',    icon: 'ti-users' },
@@ -246,8 +248,8 @@ export default function App() {
           )}
           {screen === 'zamowienia' && <ScreenPlaceholder name="Zamówienia tkanin" />}
           {screen === 'zlecenia'   && <ScreenPlaceholder name="Zlecenia szycia" />}
-          {screen === 'poczta'     && <ScreenPlaceholder name="Poczta" />}
-          {screen === 'zadania'    && <ScreenPlaceholder name="Zadania" />}
+          {screen === 'poczta' && <ScreenMail clients={clients} />}
+          {screen === 'zadania' && <ScreenTasks />}
           {screen === 'kalendarz'  && <ScreenPlaceholder name="Kalendarz" />}
         </div>
       </main>
