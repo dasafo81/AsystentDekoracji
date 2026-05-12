@@ -17,7 +17,17 @@ export const IMG_ROOM_KUCHNIA  = imgUrl("rooms/kuchnia.jpg");
 export const IMG_ROOM_SYPIALNIA= imgUrl("rooms/sypialnia.jpg");
 export const IMG_ROOM_POKÓJ    = imgUrl("rooms/pokoj.jpg");
 export const IMG_ROOM_GABINET  = imgUrl("rooms/gabinet.jpg");
-export const IMG_OKNO          = imgUrl("rooms/okno.jpg");
+export const IMG_ROOM_HOL      = imgUrl("rooms/hol.jpg");
+export const IMG_ROOM_PODDASZE = imgUrl("rooms/poddasze.jpg");
+export const IMG_WIN_1         = imgUrl("windows/okno1.jpg");
+export const IMG_WIN_2         = imgUrl("windows/okno2.jpg");
+export const IMG_WIN_3         = imgUrl("windows/okno3.jpg");
+export const IMG_WIN_LEWE      = imgUrl("windows/okno_lewe.jpg");
+export const IMG_WIN_PRAWE     = imgUrl("windows/okno_prawe.jpg");
+export const IMG_WIN_TARASOWE  = imgUrl("windows/okno_tarasowe.jpg");
+export const IMG_WIN_BALKONOWE = imgUrl("windows/okno_balkonowe.jpg");
+export const IMG_WIN_KUCHENNE  = imgUrl("windows/okno_kuchenne.jpg");
+export const IMG_OKNO          = imgUrl("windows/okno1.jpg");
 
 // Żaluzje
 export const IMG_JZ_ALUMINIUM  = imgUrl("zaluzje/aluminium.jpg");
@@ -1635,17 +1645,24 @@ export function generateKarniszOrderPDF(client){
 
 
 export const ROOM_PRESETS=[
-  {key:"salon",label:"Salon",img:IMG_ROOM_SALON},
-  {key:"kuchnia",label:"Kuchnia",img:IMG_ROOM_KUCHNIA},
-  {key:"sypialnia",label:"Sypialnia",img:IMG_ROOM_SYPIALNIA},
-  {key:"pokoj",label:"Pok\xf3j",img:IMG_ROOM_POKÓJ,needsSuffix:true},
-  {key:"gabinet",label:"Gabinet",img:IMG_ROOM_GABINET},
-  {key:"inne",label:"Inne",img:null,needsName:true}
+  {key:"salon",    label:"Salon",     img:IMG_ROOM_SALON},
+  {key:"kuchnia",  label:"Kuchnia",   img:IMG_ROOM_KUCHNIA},
+  {key:"sypialnia",label:"Sypialnia", img:IMG_ROOM_SYPIALNIA},
+  {key:"pokoj",    label:"Pok\xf3j",  img:IMG_ROOM_POKÓJ,   needsSuffix:true},
+  {key:"gabinet",  label:"Gabinet",   img:IMG_ROOM_GABINET},
+  {key:"hol",      label:"Hol",       img:IMG_ROOM_HOL},
+  {key:"poddasze", label:"Poddasze",  img:IMG_ROOM_PODDASZE},
+  {key:"inne",     label:"Inne",      img:null,needsName:true}
 ];
 
 export const WIN_PRESETS=[
-  {key:"lewe",label:"Lewe",img:IMG_OKNO},
-  {key:"prawe",label:"Prawe",img:IMG_OKNO},
-  {key:"tarasowe",label:"Tarasowe",img:IMG_OKNO},
-  {key:"inne",label:"Okno...",img:IMG_OKNO,needsName:true}
+  {key:"1",        label:"Okno 1",    img:IMG_WIN_1},
+  {key:"2",        label:"Okno 2",    img:IMG_WIN_2},
+  {key:"3",        label:"Okno 3",    img:IMG_WIN_3},
+  {key:"lewe",     label:"Lewe",      img:IMG_WIN_LEWE},
+  {key:"prawe",    label:"Prawe",     img:IMG_WIN_PRAWE},
+  {key:"tarasowe", label:"Tarasowe",  img:IMG_WIN_TARASOWE},
+  {key:"balkonowe",label:"Balkonowe", img:IMG_WIN_BALKONOWE},
+  {key:"kuchenne", label:"Kuchenne",  img:IMG_WIN_KUCHENNE},
+  {key:"inne",     label:"Inne...",   img:null,needsName:true}
 ];
