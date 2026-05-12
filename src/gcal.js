@@ -3,7 +3,7 @@
 // Silent refresh: gdy token wygaśnie, ponawiamy requestAccessToken({prompt:""})
 // w tle — Google odpowie automatycznie jeśli sesja w przeglądarce jest aktywna.
 
-export var GCAL_CLIENT_ID = "818744143681-cab0a79h5hoo4l4cracnltnh2bldi62r.apps.googleusercontent.com";
+export var GCAL_CLIENT_ID = "882275888043-1oo1b3opqft2a3tj10q93a7bl26mtkli.apps.googleusercontent.com";
 export var GCAL_SCOPES = "https://www.googleapis.com/auth/calendar.readonly https://www.googleapis.com/auth/calendar.events";
 
 var TOKEN_KEY = "pd_gcal_token";
